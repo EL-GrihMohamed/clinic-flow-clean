@@ -21,10 +21,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Extract version
-        id: ver
-        run: |
-          echo "VERSION=$(node -p \"require('./package.json').version\")" >> $GITHUB_ENV
+      - name: Extract version from package.json
+        id: get_version
+        run:  |
+          PACKAGE_VERSION=$(jq -r .version < package.json)
+          echo "VERSION=$PACKAGE_VERSION" >> $GITHUB_ENV
 
       - name: Build Angular app
         run: npm run build -- --configuration production
