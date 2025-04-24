@@ -1,0 +1,51 @@
+name: Build & Deploy clinic-flow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: [self-hosted, linux, x64]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Extract version
+        id: ver
+        run: |
+          echo "VERSION=$(node -p \"require('./package.json').version\")" >> $GITHUB_ENV
+
+      - name: Build Angular app
+        run: npm run build -- --configuration production
+
+      - name: Build Docker image
+        run: |
+          docker build \
+            -t clinic-flow:${{ env.VERSION }} \
+            -t clinic-flow:latest \
+            .
+
+      - name: Stop old container
+        run: |
+          docker ps -q --filter "name=clinic-flow" \
+            | xargs -r docker stop
+          docker ps -aq --filter "name=clinic-flow" \
+            | xargs -r docker rm
+
+      - name: Run new container
+        run: |
+          docker run -d \
+            --name clinic-flow \
+            -p 8080:80 \
+            clinic-flow:${{ env.VERSION }}
