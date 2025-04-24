@@ -16,8 +16,8 @@ import { RippleModule } from 'primeng/ripple';
 import { InputIconModule } from 'primeng/inputicon';
 import { IconFieldModule } from 'primeng/iconfield';
 import { TagModule } from 'primeng/tag';
-import { Customer, CustomerService, Representative } from '../service/customer.service';
-import { Product, ProductService } from '../service/product.service';
+import { Customer, CustomerService, Representative } from '../../services/customer.service';
+import { Product, ProductService } from '../../services/product.service';
 
 interface expandedRows {
     [key: string]: boolean;
@@ -272,7 +272,7 @@ interface expandedRows {
                 <ng-template #body let-product let-expanded="expanded">
                     <tr>
                         <td>
-                            <button type="button" pButton pRipple [pRowToggler]="product" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                            <button type="button" pButton pRipple [pRowToggler]="product" class="p-button-text p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
                         </td>
                         <td style="min-width: 12rem;">{{ product.name }}</td>
                         <td><img [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + product.image" [alt]="product.name" width="50" class="shadow-lg" /></td>

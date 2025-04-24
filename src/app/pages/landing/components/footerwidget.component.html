@@ -1,0 +1,65 @@
+<div class="bg-primary-500 text-slate-50 py-12 px-32 mx-0 mt-10">
+    <div class="grid grid-cols-12 gap-4">
+        <div class="col-span-12 md:col-span-3 md:pr-8">
+            <a (click)="router.navigate(['/'], { fragment: 'home' })"
+                class="flex flex-wrap items-center justify-center md:justify-start mb-6 cursor-pointer">
+                <img class="h-10" src="/assets/images/Massahaty-White.png" alt="Massahaty Logo">
+            </a>
+            <div class="layout-topbar-action mb-6 ">
+                <i class="pi pi-globe"></i>
+                <select class="bg-transparent" (change)="changeLanguage($event.target)">
+                    <option *ngFor="let lang of translate.getLangs()" [value]="lang">
+                        {{ lang.toUpperCase() }}
+                    </option>
+                </select>
+            </div>
+            <p>
+                Massahaty is the smartest HealthCare AI Platform. ....
+            </p>
+        </div>
+
+        <div class="col-span-12 md:col-span-9">
+            <div class="grid grid-cols-12 gap-8 text-center md:text-left">
+                <div class="col-span-12 md:col-span-3">
+                    <h4 class="font-medium text-xl leading-normal mb-6 text-primary-200">Company</h4>
+                    <a class="leading-normal block cursor-pointer mb-2 ">About Us</a>
+                    <a class="leading-normal block cursor-pointer mb-2 ">News</a>
+                    <a class="leading-normal block cursor-pointer mb-2 ">Investor Relations</a>
+                    <a class="leading-normal block cursor-pointer mb-2 ">Careers</a>
+                    <a class="leading-normal block cursor-pointer ">Media Kit</a>
+                </div>
+
+                <div class="col-span-12 md:col-span-3">
+                    <h4 class="font-medium text-xl leading-normal mb-6 text-primary-200">Resources</h4>
+                    <a class="leading-normal block cursor-pointer mb-2 ">Get Started</a>
+                    <a class="leading-normal block cursor-pointer mb-2 ">Learn</a>
+                    <a class="leading-normal block cursor-pointer ">Case Studies</a>
+                </div>
+
+                <div class="col-span-12 md:col-span-3">
+                    <h4 class="font-medium text-xl leading-normal mb-6 text-primary-200">Community</h4>
+                    <a class="leading-normal block cursor-pointer mb-2 ">Discord</a>
+                    <a class="leading-normal block cursor-pointer mb-2 ">Events<img
+                            src="https://primefaces.org/cdn/templates/sakai/landing/new-badge.svg" alt="badge"
+                            class="ml-2" /></a>
+                    <a class="leading-normal block cursor-pointer mb-2 ">FAQ</a>
+                    <a class="leading-normal block cursor-pointer ">Blog</a>
+                </div>
+
+                <div class="col-span-12 md:col-span-3">
+                    <h4 class="font-medium text-xl leading-normal mb-6 text-primary-200">Legal</h4>
+                    <a class="leading-normal block cursor-pointer mb-2 ">Brand Policy</a>
+                    <a class="leading-normal block cursor-pointer mb-2 ">Privacy Policy</a>
+                    <a class="leading-normal block cursor-pointer ">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mt-10 mb-4 w-full h-[1px] bg-slate-300/70"></div>
+    <div class="flex justify-between items-center">
+        <p>&copy; 2025 AphelionX Innovations. {{ 'footer.right-reserved' | translate }}.</p>
+        <div>
+            Social Media
+        </div>
+    </div>
+</div>

@@ -3,3 +3,15 @@
 @use './assets/layout/layout.scss';
 @use 'primeicons/primeicons.css';
 @use './assets/demo/demo.scss';
+
+:root{
+    --p-border-radius-md: 8px !important;
+}
+
+.navbar{
+    @apply text-slate-500 dark:text-slate-100;
+}
+
+.layout-topbar-action{
+    @apply rounded-xl !important;
+}

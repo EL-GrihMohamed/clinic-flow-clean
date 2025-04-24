@@ -1,0 +1,20 @@
+{
+    "navigation": {
+        "login": "Connecter",
+        "home": "Acceuil",
+        "features": "Caractéristiques"
+    },
+    "footer": {
+        "right-reserved": "Tous droits réservés"
+    },
+    "login": {
+        "welcome": "Bienvenue à nouveau",
+        "welcome-details": "Connectez-vous pour continuer",
+        "email": "E-mail",
+        "email-address": "Adresse email",
+        "password": "Mot de passe",
+        "remember-me": "Souviens-toi de moi",
+        "forgot-password": "Mot de passe oublié",
+        "sign-in": "Se connecter"
+    }
+}

@@ -18,7 +18,7 @@ import { TagModule } from 'primeng/tag';
 import { InputIconModule } from 'primeng/inputicon';
 import { IconFieldModule } from 'primeng/iconfield';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { Product, ProductService } from '../service/product.service';
+import { Product, ProductService } from '../../services/product.service';
 
 interface Column {
     field: string;
@@ -139,8 +139,8 @@ interface ExportColumn {
                         <p-tag [value]="product.inventoryStatus" [severity]="getSeverity(product.inventoryStatus)" />
                     </td>
                     <td>
-                        <p-button icon="pi pi-pencil" class="mr-2" [rounded]="true" [outlined]="true" (click)="editProduct(product)" />
-                        <p-button icon="pi pi-trash" severity="danger" [rounded]="true" [outlined]="true" (click)="deleteProduct(product)" />
+                        <p-button icon="pi pi-pencil" class="mr-2" [outlined]="true" (click)="editProduct(product)" />
+                        <p-button icon="pi pi-trash" severity="danger" [outlined]="true" (click)="deleteProduct(product)" />
                     </td>
                 </tr>
             </ng-template>

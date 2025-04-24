@@ -1,0 +1,20 @@
+{
+    "navigation": {
+        "login": "Login",
+        "home": "Home",
+        "features": "Features"
+    },
+    "footer": {
+        "right-reserved": "All rights reserved"
+    },
+    "login": {
+        "welcome": "Welcome again",
+        "welcome-details": "Sign in to continue",
+        "email": "Email",
+        "email-address": "Email address",
+        "password": "Password",
+        "remember-me": "Remember me",
+        "forgot-password": "Forgot password",
+        "sign-in": "Sign In"
+    }
+}
