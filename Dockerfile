@@ -9,12 +9,23 @@ RUN npm run build -- --configuration production
 
 # 2. Runtime stage
 FROM nginx:alpine
+
 # Remove default nginx content
 RUN rm -rf /usr/share/nginx/html/*
-# Copy built files
-COPY --from=builder /app/dist/clinic-flow /usr/share/nginx/html
-# (Optional) Copy a custom nginx.conf if you need rewrites, caching, etc.
-# COPY nginx.conf /etc/nginx/nginx.conf
 
-EXPOSE 80
+# copy our nginx config
+COPY /app/default.conf /etc/nginx/conf.d/default.conf
+
+# copy the prerendered files & licenses (if you need them served)
+COPY --from=builder /app/dist/clinic-flow/3rdpartylicenses.txt    /usr/share/nginx/html/
+COPY --from=builder /app/dist/clinic-flow/prerendered-routes.json /usr/share/nginx/html/
+
+# copy the browser build *contents* into the nginx root
+COPY --from=builder /app/dist/clinic-flow/browser/ /usr/share/nginx/html/
+
+# fix permissions so the 'nginx' user can read everything
+RUN chown -R nginx:nginx /usr/share/nginx/html \
+ && chmod -R 755               /usr/share/nginx/html
+
+EXPOSE 443
 CMD ["nginx", "-g", "daemon off;"]
