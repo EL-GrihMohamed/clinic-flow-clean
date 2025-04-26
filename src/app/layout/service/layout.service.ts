@@ -1,5 +1,6 @@
 import { Injectable, effect, signal, computed } from '@angular/core';
 import { Subject } from 'rxjs';
+import { LocalStorageService } from '../../services/local-storage.service';
 
 export interface layoutConfig {
     preset?: string;
@@ -30,7 +31,7 @@ export class LayoutService {
         preset: 'Lara',
         primary: 'teal',
         surface: 'slate',
-        darkTheme: false,
+        darkTheme: LocalStorageService.getDarkMode(),
         menuMode: 'static'
     };
 
@@ -78,7 +79,9 @@ export class LayoutService {
 
     private initialized = false;
 
-    constructor() {
+    constructor(
+        private storage: LocalStorageService
+    ) {
         effect(() => {
             const config = this.layoutConfig();
             if (config) {
@@ -116,15 +119,17 @@ export class LayoutService {
             .then(() => {
                 this.onTransitionEnd();
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 
     toggleDarkMode(config?: layoutConfig): void {
         const _config = config || this.layoutConfig();
         if (_config.darkTheme) {
             document.documentElement.classList.add('app-dark');
+            this.storage.setDarkMode(true);
         } else {
             document.documentElement.classList.remove('app-dark');
+            this.storage.setDarkMode(false);
         }
     }
 

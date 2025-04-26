@@ -1,0 +1,58 @@
+<app-floating-configurator />
+<div
+    class="bg-surface-50 dark:bg-surface-950 flex items-center justify-center min-h-screen min-w-[100vw] overflow-hidden">
+    <div class="flex flex-col items-center justify-center">
+        <div class="rounded-3xl"
+            style="padding: 0.3rem; background: linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%)">
+            <form [formGroup]="loginForm" class="w-full bg-surface-0 dark:bg-surface-900 py-12 px-10 rounded-3xl">
+                <div class="text-center mb-4">
+                    <a routerLink="/">
+                        <img class="h-28 mb-10 mx-auto" src="/assets/images/Massahaty-Al-Nakhil.png" alt="Massahaty Logo">
+                    </a>
+                    <div class="text-surface-900 dark:text-surface-0 text-3xl font-medium mb-4">{{ 'login.welcome' |
+                        translate }}!</div>
+                    <span class="text-muted-color font-medium">{{ 'login.welcome-details' | translate }}</span>
+                </div>
+
+                <div *ngIf="errMessage" class="mb-4">
+                    <p-message severity="error">{{errMessage}}</p-message>
+                </div>
+
+                <div class="mt-4">
+                    <label for="username" class="block text-surface-900 dark:text-surface-0 text-xl font-medium mb-2">{{
+                        'login.username' | translate }}</label>
+                    <input pInputText id="username" type="text" placeholder="{{ 'login.enter-username' | translate }}"
+                        class="w-full md:w-[30rem] mb-1" formControlName="userName" />
+                    <p-message
+                        *ngIf="loginForm.get('userName')?.touched && loginForm.get('userName')?.hasError('required')"
+                        severity="error" variant="simple" size="small">{{ 'login.username-required' | translate
+                        }}</p-message>
+
+                    <label for="password"
+                        class="mt-4 block text-surface-900 dark:text-surface-0 font-medium text-xl mb-2">{{
+                        'login.password' | translate }}</label>
+                    <p-password id="password" formControlName="password"
+                        placeholder="{{ 'login.enter-password' | translate }}" [toggleMask]="true" [fluid]="true"
+                        [feedback]="false"></p-password>
+                    <p-message
+                        *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.hasError('required')"
+                        severity="error" variant="simple" size="small">{{ 'login.password-required' | translate
+                        }}</p-message>
+
+                    <div class="flex items-center justify-between mt-6 mb-8 gap-8">
+                        <div class="flex items-center">
+                            
+                        </div>
+                        <span class="font-medium no-underline ml-2 text-right cursor-pointer text-primary">{{
+                            'login.forgot-password' | translate }}?</span>
+                    </div>
+
+                    <p-button [disabled]="loading" type="submit" (onClick)="onLogin()" styleClass="w-full">
+                        <i *ngIf="loading" class="pi pi-spin pi-spinner"></i>
+                        {{ 'login.sign-in' | translate }}
+                    </p-button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

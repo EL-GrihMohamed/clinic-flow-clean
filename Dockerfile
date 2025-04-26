@@ -14,7 +14,7 @@ FROM nginx:alpine
 RUN rm -rf /usr/share/nginx/html/*
 
 # copy our nginx config
-COPY /app/default.conf /etc/nginx/conf.d/default.conf
+COPY --from=builder /app/default.conf /etc/nginx/conf.d/default.conf
 
 # copy the prerendered files & licenses (if you need them served)
 COPY --from=builder /app/dist/clinic-flow/3rdpartylicenses.txt    /usr/share/nginx/html/

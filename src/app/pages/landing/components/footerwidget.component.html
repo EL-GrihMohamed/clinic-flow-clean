@@ -7,7 +7,7 @@
             </a>
             <div class="layout-topbar-action mb-6 ">
                 <i class="pi pi-globe"></i>
-                <select class="bg-transparent" (change)="changeLanguage($event.target)">
+                <select [(ngModel)]="storage.lang" class="bg-transparent" (change)="changeLanguage($event.target)">
                     <option *ngFor="let lang of translate.getLangs()" [value]="lang">
                         {{ lang.toUpperCase() }}
                     </option>

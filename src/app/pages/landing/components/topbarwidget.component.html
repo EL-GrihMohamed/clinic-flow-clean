@@ -34,7 +34,7 @@
     <div class="flex items-center border-t lg:border-t-0 border-surface py-4 lg:py-0 mt-4 lg:mt-0 gap-5">
         <div class="layout-topbar-action">
             <i class="pi pi-globe"></i>
-            <select (change)="changeLanguage($event.target)">
+            <select (change)="changeLanguage($event.target)" [(ngModel)]="storage.lang">
                 <option *ngFor="let lang of translate.getLangs()" [value]="lang">
                     {{ lang.toUpperCase() }}
                 </option>

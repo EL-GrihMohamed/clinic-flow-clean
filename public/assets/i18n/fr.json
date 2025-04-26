@@ -2,7 +2,8 @@
     "navigation": {
         "login": "Connecter",
         "home": "Acceuil",
-        "features": "Caractéristiques"
+        "features": "Caractéristiques",
+        "go-back": "Retour"
     },
     "footer": {
         "right-reserved": "Tous droits réservés"
@@ -10,11 +11,16 @@
     "login": {
         "welcome": "Bienvenue à nouveau",
         "welcome-details": "Connectez-vous pour continuer",
-        "email": "E-mail",
-        "email-address": "Adresse email",
+        "username": "Nom d'utilisateur",
+        "enter-username": "Entrez votre nom d'utilisateur",
+        "username-required": "Nom d'utilisateur obligatoire",
         "password": "Mot de passe",
+        "enter-password": "Entrez votre mot de passe",
+        "password-required": "Mot de passe obligatoire",
         "remember-me": "Souviens-toi de moi",
         "forgot-password": "Mot de passe oublié",
-        "sign-in": "Se connecter"
+        "sign-in": "Se connecter",
+        "invalid-user": "Nom d'utilisateur ou mot de passe incorrect",
+        "invalid": "Quelque chose s'est mal passé!"
     }
 }

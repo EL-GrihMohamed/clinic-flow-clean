@@ -1,4 +1,4 @@
-import { HttpClient, provideHttpClient, withFetch } from '@angular/common/http';
+import { HttpClient, provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { APP_INITIALIZER, ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter, withEnabledBlockingInitialNavigation, withInMemoryScrolling } from '@angular/router';
@@ -8,6 +8,7 @@ import { appRoutes } from './app.routes';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import en from '../public/assets/i18n/en.json';
+import { authInterceptor } from './app/auth.interceptor';
 
 
 export function httpLoaderFactory(http: HttpClient) {
@@ -19,7 +20,6 @@ export function syncEnFactory(translate: TranslateService) {
     // load the JSON into ngx-translate’s store
     translate.setTranslation('en', en, true);
     translate.setDefaultLang('en');
-    // note: we don’t call translate.use('en') here because our JSON is already in memory
   };
 }
 
@@ -27,6 +27,9 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(appRoutes, withInMemoryScrolling({ anchorScrolling: 'enabled', scrollPositionRestoration: 'enabled' }), withEnabledBlockingInitialNavigation()),
     provideHttpClient(withFetch()),
+    provideHttpClient(
+      withInterceptors([ authInterceptor ])
+    ),
     provideAnimationsAsync(),
     providePrimeNG({ theme: { preset: Aura, options: { darkModeSelector: '.app-dark' } } }),
     importProvidersFrom(

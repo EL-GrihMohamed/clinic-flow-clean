@@ -1,0 +1,7 @@
+{
+    "/api": {
+      "target": "https://workflows.aphelionxinnovations.com",
+      "changeOrigin": true,
+      "pathRewrite": { "^/api": "/webhook" }
+    }
+}  

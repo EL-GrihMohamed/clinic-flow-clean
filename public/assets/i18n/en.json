@@ -2,7 +2,8 @@
     "navigation": {
         "login": "Login",
         "home": "Home",
-        "features": "Features"
+        "features": "Features",
+        "go-back": "Go Back"
     },
     "footer": {
         "right-reserved": "All rights reserved"
@@ -10,11 +11,16 @@
     "login": {
         "welcome": "Welcome again",
         "welcome-details": "Sign in to continue",
-        "email": "Email",
-        "email-address": "Email address",
+        "username": "Username",
+        "enter-username": "Enter your username",
+        "username-required": "Username required",
         "password": "Password",
+        "enter-password": "Enter your password",
+        "password-required": "Password required",
         "remember-me": "Remember me",
         "forgot-password": "Forgot password",
-        "sign-in": "Sign In"
+        "sign-in": "Sign In",
+        "invalid-user": "Username or Password Incorrect.",
+        "invalid": "Something went wrong!"
     }
 }
