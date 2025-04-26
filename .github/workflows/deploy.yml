@@ -49,6 +49,6 @@ jobs:
           docker run -d \
             --name clinic-flow \
             -p 8080:443 \
-            -v /etc/nginx/cert/workflows.aphelionxinnovations.com.cert:/etc/nginx/ssl/server.crt:ro
-            -v /etc/nginx/cert/workflows.aphelionxinnovations.com.key:/etc/nginx/ssl/server.key:ro
+            -v /etc/nginx/cert/workflows.aphelionxinnovations.com.cert:/etc/nginx/ssl/server.crt:ro \
+            -v /etc/nginx/cert/workflows.aphelionxinnovations.com.key:/etc/nginx/ssl/server.key:ro \
             clinic-flow:${{ env.VERSION }}
