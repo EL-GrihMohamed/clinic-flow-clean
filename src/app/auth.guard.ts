@@ -9,7 +9,11 @@ export const authGuard: CanActivateFn = (route, state) => {
 
   return auth.getUser().pipe(
     // if the call succeeds, the token is valid → allow navigation
-    map(() => true),
+    map(res => {
+      if(res.guid)
+        return true;
+      return false;
+    }),
 
     // if it errors (e.g. 401), redirect to /login
     catchError(() =>
