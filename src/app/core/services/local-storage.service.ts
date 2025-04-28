@@ -21,6 +21,10 @@ export class LocalStorageService {
     localStorage.setItem(this.tokenKey, newToken);
   }
 
+  cleanToken(): void {
+    localStorage.removeItem(this.tokenKey);
+  }
+
   getLang(): string | null {
     return localStorage.getItem(this.langKey);
   }

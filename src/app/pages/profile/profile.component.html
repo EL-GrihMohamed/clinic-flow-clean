@@ -1,0 +1,46 @@
+<p-fluid>
+    <form [formGroup]="profileForm" class="flex mt-8">
+        <div class="card flex flex-col gap-6 w-full">
+            <div class="font-semibold text-2xl mb-4">{{ 'profile.title' | translate }}</div>
+            <div class="flex flex-col md:flex-row gap-6">
+                <div class="flex flex-wrap gap-2 w-full">
+                    <label for="fullname">{{ 'profile.fullName' | translate }}</label>
+                    <input formControlName="fullName" pInputText id="fullname" type="text" />
+                </div>
+            </div>
+            <div class="flex flex-col md:flex-row gap-6">
+                <div class="flex flex-wrap gap-2 w-full">
+                    <label for="email">{{ 'profile.email' | translate }}</label>
+                    <input formControlName="email" pInputText id="email" type="text" />
+                </div>
+            </div>
+
+            <!-- <div class="flex flex-wrap">
+                <label for="address">Address</label>
+                <textarea pTextarea id="address" rows="4"></textarea>
+            </div> -->
+
+            <!-- <div class="flex flex-col md:flex-row gap-6">
+                <div class="flex flex-wrap gap-2 w-full">
+                    <label for="state">State</label>
+                    <p-select id="state" [options]="dropdownItems" optionLabel="name" placeholder="Select One"
+                        class="w-full"></p-select>
+                </div>
+                <div class="flex flex-wrap gap-2 w-full">
+                    <label for="zip">Zip</label>
+                    <input pInputText id="zip" type="text" />
+                </div>
+            </div> -->
+
+            <div class="flex flex-col md:flex-row gap-6">
+                <div class="flex flex-wrap justify-end gap-2 w-full">
+                    <p-button [disabled]="loading" (click)="saveProfile()">
+                        <i *ngIf="loading" class="pi pi-spin pi-spinner"></i>
+                        <i *ngIf="!loading" class="pi pi-check"></i>
+                        Save
+                    </p-button>
+                </div>
+            </div>
+        </div>
+    </form>
+</p-fluid>

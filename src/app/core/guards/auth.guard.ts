@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { AuthService } from './services/auth.service';
+import { AuthService } from '../services/auth.service';
 import { catchError, map, of } from 'rxjs';
 
 export const authGuard: CanActivateFn = (route, state) => {
@@ -10,8 +10,10 @@ export const authGuard: CanActivateFn = (route, state) => {
   return auth.getUser().pipe(
     // if the call succeeds, the token is valid → allow navigation
     map(res => {
-      if(res.guid)
+      if (res.guid) {
+        auth.setRoles([res.role.toLowerCase()]);
         return true;
+      }
       return false;
     }),
 

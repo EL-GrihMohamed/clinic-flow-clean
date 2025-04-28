@@ -1,9 +1,17 @@
 {
+    "global": {
+        "mode": "Mode"
+    },
     "navigation": {
         "login": "Connecter",
         "home": "Acceuil",
         "features": "Caractéristiques",
-        "go-back": "Retour"
+        "go-back": "Retour",
+        "logout": "Déconnexion",
+        "profile": "Profil"
+    },
+    "actions": {
+        "save": "Enregister"
     },
     "footer": {
         "right-reserved": "Tous droits réservés"
@@ -22,5 +30,10 @@
         "sign-in": "Se connecter",
         "invalid-user": "Nom d'utilisateur ou mot de passe incorrect",
         "invalid": "Quelque chose s'est mal passé!"
+    },
+    "profile": {
+        "title": "Profil",
+        "fullName": "Nom et prénom",
+        "email": "E-mail"
     }
 }

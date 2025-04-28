@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { AppMenuitem } from './app.menuitem';
+import { HasRoleDirective } from '../../core/directives/has-role.directive';
+import { CustomMenuItem } from '../custom-menu-item';
 
 @Component({
     selector: 'app-menu',
@@ -16,13 +18,17 @@ import { AppMenuitem } from './app.menuitem';
     </ul> `
 })
 export class AppMenu {
-    model: MenuItem[] = [];
+    model: CustomMenuItem[] = [];
 
     ngOnInit() {
         this.model = [
             {
                 label: 'Home',
-                items: [{ label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/'] }]
+                items: [
+                    { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/dashboard'], hasRole: ['doctor'] },
+                    { label: 'Patients', icon: 'pi pi-fw pi-address-book', routerLink: ['/patients'], hasRole: ['doctor', 'reception'] },
+                    { label: 'Visit', icon: 'pi pi-fw pi-book', routerLink: ['/visit'], hasRole: ['doctor'] },
+                ]
             },
             {
                 label: 'UI Components',
@@ -50,19 +56,9 @@ export class AppMenu {
                 routerLink: ['/pages'],
                 items: [
                     {
-                        label: 'Landing',
-                        icon: 'pi pi-fw pi-globe',
-                        routerLink: ['/landing']
-                    },
-                    {
                         label: 'Auth',
                         icon: 'pi pi-fw pi-user',
                         items: [
-                            {
-                                label: 'Login',
-                                icon: 'pi pi-fw pi-sign-in',
-                                routerLink: ['/auth/login']
-                            },
                             {
                                 label: 'Error',
                                 icon: 'pi pi-fw pi-times-circle',
@@ -133,22 +129,6 @@ export class AppMenu {
                                 items: [{ label: 'Submenu 2.2.1', icon: 'pi pi-fw pi-bookmark' }]
                             }
                         ]
-                    }
-                ]
-            },
-            {
-                label: 'Get Started',
-                items: [
-                    {
-                        label: 'Documentation',
-                        icon: 'pi pi-fw pi-book',
-                        routerLink: ['/documentation']
-                    },
-                    {
-                        label: 'View Source',
-                        icon: 'pi pi-fw pi-github',
-                        url: 'https://github.com/primefaces/sakai-ng',
-                        target: '_blank'
                     }
                 ]
             }

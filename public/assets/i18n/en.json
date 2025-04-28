@@ -1,9 +1,17 @@
 {
+    "global": {
+        "mode": "Mode"
+    },
     "navigation": {
         "login": "Login",
         "home": "Home",
         "features": "Features",
-        "go-back": "Go Back"
+        "go-back": "Go Back",
+        "logout": "Logout",
+        "profile": "Profile"
+    },
+    "actions": {
+        "save": "Save"
     },
     "footer": {
         "right-reserved": "All rights reserved"
@@ -22,5 +30,10 @@
         "sign-in": "Sign In",
         "invalid-user": "Username or Password Incorrect.",
         "invalid": "Something went wrong!"
+    },
+    "profile": {
+        "title": "Profile",
+        "fullName": "Fullname",
+        "email": "Email"
     }
 }

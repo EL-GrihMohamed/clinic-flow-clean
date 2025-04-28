@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { LocalStorageService } from '../../../services/local-storage.service';
+import { LocalStorageService } from '../../../core/services/local-storage.service';
 import { FormsModule } from '@angular/forms';
 
 @Component({

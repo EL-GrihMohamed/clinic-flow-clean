@@ -8,8 +8,8 @@ import { PasswordModule } from 'primeng/password';
 import { RippleModule } from 'primeng/ripple';
 import { AppFloatingConfigurator } from '../../layout/component/app.floatingconfigurator';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { AuthService } from '../../services/auth.service';
-import { LocalStorageService } from '../../services/local-storage.service';
+import { AuthService } from '../../core/services/auth.service';
+import { LocalStorageService } from '../../core/services/local-storage.service';
 import { MessageModule } from 'primeng/message';
 import { CommonModule } from '@angular/common';
 
@@ -37,7 +37,7 @@ export class Login implements OnInit {
             next: res => {
                 this.router.navigate(["/dashboard"]);
             },
-            error: ()=> {}
+            error: () => { }
         });
         this.loginForm = this.fb.group({
             userName: ['', Validators.required],

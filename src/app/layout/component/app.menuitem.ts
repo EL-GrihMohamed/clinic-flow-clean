@@ -5,15 +5,16 @@ import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { RippleModule } from 'primeng/ripple';
-import { MenuItem } from 'primeng/api';
 import { LayoutService } from '../service/layout.service';
+import { CustomMenuItem } from '../custom-menu-item';
+import { HasRoleDirective } from '../../core/directives/has-role.directive';
 
 @Component({
     // eslint-disable-next-line @angular-eslint/component-selector
     selector: '[app-menuitem]',
-    imports: [CommonModule, RouterModule, RippleModule],
+    imports: [CommonModule, RouterModule, RippleModule, HasRoleDirective],
     template: `
-        <ng-container>
+        <ng-container  *hasRole="item.hasRole ?? 'all'">
             <div *ngIf="root && item.visible !== false" class="layout-menuitem-root-text">{{ item.label }}</div>
             <a *ngIf="(!item.routerLink || item.items) && item.visible !== false" [attr.href]="item.url" (click)="itemClick($event)" [ngClass]="item.styleClass" [attr.target]="item.target" tabindex="0" pRipple>
                 <i [ngClass]="item.icon" class="layout-menuitem-icon"></i>
@@ -70,7 +71,7 @@ import { LayoutService } from '../service/layout.service';
     providers: [LayoutService]
 })
 export class AppMenuitem {
-    @Input() item!: MenuItem;
+    @Input() item!: CustomMenuItem;
 
     @Input() index!: number;
 

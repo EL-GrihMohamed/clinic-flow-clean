@@ -4,7 +4,7 @@ import { StyleClassModule } from 'primeng/styleclass';
 import { LayoutService } from '../service/layout.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
-import { LocalStorageService } from '../../services/local-storage.service';
+import { LocalStorageService } from '../../core/services/local-storage.service';
 import { FormsModule } from '@angular/forms';
 import { Location } from '@angular/common';
 

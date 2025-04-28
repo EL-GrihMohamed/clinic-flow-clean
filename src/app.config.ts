@@ -8,7 +8,7 @@ import { appRoutes } from './app.routes';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import en from '../public/assets/i18n/en.json';
-import { authInterceptor } from './app/auth.interceptor';
+import { authInterceptor } from './app/core/auth.interceptor';
 
 
 export function httpLoaderFactory(http: HttpClient) {

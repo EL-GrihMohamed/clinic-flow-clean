@@ -1,6 +1,6 @@
 import { Injectable, effect, signal, computed } from '@angular/core';
 import { Subject } from 'rxjs';
-import { LocalStorageService } from '../../services/local-storage.service';
+import { LocalStorageService } from '../../core/services/local-storage.service';
 
 export interface layoutConfig {
     preset?: string;

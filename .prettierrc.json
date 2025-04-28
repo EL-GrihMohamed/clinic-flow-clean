@@ -20,6 +20,12 @@
             }
         },
         {
+            "files": ["*.css", "*.scss"],
+            "options": {
+                "parser": "scss"
+            }
+        },
+        {
             "files": ["*.component.html"],
             "options": {
                 "parser": "angular"

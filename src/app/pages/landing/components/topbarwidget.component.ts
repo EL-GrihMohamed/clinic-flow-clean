@@ -6,17 +6,22 @@ import { ButtonModule } from 'primeng/button';
 import { LayoutService } from '../../../layout/service/layout.service';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { LocalStorageService } from '../../../services/local-storage.service';
+import { LocalStorageService } from '../../../core/services/local-storage.service';
 import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'topbar-widget',
     imports: [RouterModule, StyleClassModule, ButtonModule, RippleModule, TranslateModule, FormsModule, CommonModule],
-    templateUrl: './topbarwidget.component.html'
+    templateUrl: './topbarwidget.component.html',
+    styles: `
+        .navbar{
+            @apply text-slate-500 dark:text-slate-100;
+        }
+    `
 })
 export class TopbarWidget {
 
-    constructor(public router: Router, public layoutService: LayoutService, public translate: TranslateService, public storage: LocalStorageService) {}
+    constructor(public router: Router, public layoutService: LayoutService, public translate: TranslateService, public storage: LocalStorageService) { }
 
     toggleDarkMode() {
         this.layoutService.layoutConfig.update((state) => ({ ...state, darkTheme: !state.darkTheme }));
