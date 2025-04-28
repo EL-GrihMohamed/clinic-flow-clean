@@ -1,7 +1,7 @@
 import { Genre } from "./gender.enum";
 
 export interface Patient {
-    id?: number;
+    id?: string;
     ipp?: string;
     cin?: string;
     nom?: string;
@@ -9,14 +9,13 @@ export interface Patient {
     telephone?: string;
     adresse?: string;
     ville?: string;
-    date_naissance?: Date;
+    birthDate?: Date;
     sexe?: Genre;
-    is_minor?: boolean;
-    has_insurance?: boolean;
-    mutuelle?: string;
-    qr_code?: string;
-    medecin_referent?: string;
-    companion_id?: number;
-    created_at?: Date;
+    isMinor?: boolean;
+    hasInsurance?: boolean;
+    qrCode?: string;
+    mutuelleId?: string;
+    medecinId?: number;
+    companionId?: number;
+    createdAt?: Date;
 }
-

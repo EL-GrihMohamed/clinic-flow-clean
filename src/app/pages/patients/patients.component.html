@@ -112,19 +112,19 @@
                 <span class="block font-bold mb-4">Category</span>
                 <div class="grid grid-cols-12 gap-4">
                     <div class="flex items-center gap-2 col-span-6">
-                        <p-radiobutton id="category1" name="category" value="Accessories" [(ngModel)]="patient.is_minor" />
+                        <p-radiobutton id="category1" name="category" value="Accessories" [(ngModel)]="patient.isMinor" />
                         <label for="category1">Accessories</label>
                     </div>
                     <div class="flex items-center gap-2 col-span-6">
-                        <p-radiobutton id="category2" name="category" value="Clothing" [(ngModel)]="patient.is_minor" />
+                        <p-radiobutton id="category2" name="category" value="Clothing" [(ngModel)]="patient.isMinor" />
                         <label for="category2">Clothing</label>
                     </div>
                     <div class="flex items-center gap-2 col-span-6">
-                        <p-radiobutton id="category3" name="category" value="Electronics" [(ngModel)]="patient.is_minor" />
+                        <p-radiobutton id="category3" name="category" value="Electronics" [(ngModel)]="patient.isMinor" />
                         <label for="category3">Electronics</label>
                     </div>
                     <div class="flex items-center gap-2 col-span-6">
-                        <p-radiobutton id="category4" name="category" value="Fitness" [(ngModel)]="patient.is_minor" />
+                        <p-radiobutton id="category4" name="category" value="Fitness" [(ngModel)]="patient.isMinor" />
                         <label for="category4">Fitness</label>
                     </div>
                 </div>
@@ -133,11 +133,11 @@
             <div class="grid grid-cols-12 gap-4">
                 <div class="col-span-6">
                     <label for="price" class="block font-bold mb-3">Price</label>
-                    <p-inputnumber id="price" [(ngModel)]="patient.id" mode="currency" currency="USD" locale="en-US" fluid />
+                    <p-inputnumber id="price" [(ngModel)]="patient.medecinId" mode="currency" currency="USD" locale="en-US" fluid />
                 </div>
                 <div class="col-span-6">
                     <label for="quantity" class="block font-bold mb-3">Quantity</label>
-                    <p-inputnumber id="quantity" [(ngModel)]="patient.id" fluid />
+                    <p-inputnumber id="quantity" [(ngModel)]="patient.medecinId" fluid />
                 </div>
             </div>
         </div>

@@ -67,7 +67,7 @@ export class PatientsComponent {
   }
 
   openNew() {
-    this.patient = { id: 0 };
+    this.patient = { };
     this.submitted = false;
     this.patientDialog = true;
   }
