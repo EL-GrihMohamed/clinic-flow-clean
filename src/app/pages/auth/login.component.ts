@@ -35,7 +35,8 @@ export class Login implements OnInit {
     ngOnInit() {
         this.authService.getUser().subscribe({
             next: res => {
-                this.router.navigate(["/dashboard"]);
+                if (res.success)
+                    this.router.navigate(["/dashboard"]);
             },
             error: () => { }
         });
@@ -56,10 +57,10 @@ export class Login implements OnInit {
 
         this.authService.login(userName, password).subscribe({
             next: res => {
-                if (!res.access_token)
+                if (!res.accessToken)
                     this.errMessage = this.translate.instant("login.invalid");
                 else {
-                    this.storageService.setToken(res.access_token);
+                    this.storageService.setToken(res.accessToken);
                     this.router.navigate(["/dashboard"]);
                 }
                 this.loading = false;

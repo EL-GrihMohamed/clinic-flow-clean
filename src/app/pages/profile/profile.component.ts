@@ -36,8 +36,8 @@ export class ProfileComponent implements OnInit {
     this.loading = true;
     this.authService.getUser().subscribe({
       next: res => {
-        this.profileForm.controls['fullName'].setValue(res.fullName);
-        this.profileForm.controls['email'].setValue(res.email);
+        this.profileForm.controls['fullName'].setValue(res.user.firstName);
+        this.profileForm.controls['email'].setValue(res.user.email);
         this.loading = false;
       },
       error: err => {

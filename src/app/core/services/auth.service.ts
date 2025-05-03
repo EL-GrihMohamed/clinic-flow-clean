@@ -22,11 +22,11 @@ export class AuthService {
     });
   }
 
-  public getUser(): Observable<User> {
+  public getUser(): Observable<{ success: boolean, user: User }> {
     const headers = new HttpHeaders({
       'Accept': 'application/json'
     });
-    return this.http.get<User>(`/api/user/me`, { headers });
+    return this.http.get<{ success: boolean, user: User }>(`/api/user/me`, { headers });
   }
 
   getRoles(): string[] {
