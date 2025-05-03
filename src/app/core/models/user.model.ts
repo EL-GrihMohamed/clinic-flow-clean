@@ -1,6 +1,8 @@
 export interface User {
     guid: string;
-    fullName: string;
+    firstName: string;
+    lastName: string;
+    userName: string;
     email: string;
     role: string;
 }

@@ -10,8 +10,8 @@ export const authGuard: CanActivateFn = (route, state) => {
   return auth.getUser().pipe(
     // if the call succeeds, the token is valid → allow navigation
     map(res => {
-      if (res.guid) {
-        auth.setRoles([res.role.toLowerCase()]);
+      if (res.success) {
+        auth.setRoles([res.user.role.toLowerCase()]);
         return true;
       }
       return false;
