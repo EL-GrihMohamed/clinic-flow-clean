@@ -22,9 +22,9 @@
                     <label for="username" class="block text-surface-900 dark:text-surface-0 text-xl font-medium mb-2">{{
                         'login.username' | translate }}</label>
                     <input pInputText id="username" type="text" placeholder="{{ 'login.enter-username' | translate }}"
-                        class="w-full md:w-[30rem] mb-1" formControlName="userName" />
+                        class="w-full md:w-[30rem] mb-1" formControlName="username" />
                     <p-message
-                        *ngIf="loginForm.get('userName')?.touched && loginForm.get('userName')?.hasError('required')"
+                        *ngIf="loginForm.get('username')?.touched && loginForm.get('username')?.hasError('required')"
                         severity="error" variant="simple" size="small">{{ 'login.username-required' | translate
                         }}</p-message>
 

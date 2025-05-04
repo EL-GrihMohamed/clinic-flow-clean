@@ -1,46 +1,108 @@
 <p-fluid>
-    <form [formGroup]="profileForm" class="flex mt-8">
+    <form [formGroup]="profileForm" class="flex">
         <div class="card flex flex-col gap-6 w-full">
+
             <div class="font-semibold text-2xl mb-4">{{ 'profile.title' | translate }}</div>
-            <div class="flex flex-col md:flex-row gap-6">
-                <div class="flex flex-wrap gap-2 w-full">
-                    <label for="fullname">{{ 'profile.fullName' | translate }}</label>
-                    <input formControlName="fullName" pInputText id="fullname" type="text" />
+
+            <div class="grid grid-cols-12 gap-4">
+                <label for="name3" class="flex items-center col-span-12 mb-2 md:col-span-2 md:mb-0">{{ 'user.username' |
+                    translate }}</label>
+                <div class="col-span-12 md:col-span-10">
+                    <input pInputText id="name3" [disabled]="true" value="{{ currentUser?.username }}" type="text" />
                 </div>
             </div>
-            <div class="flex flex-col md:flex-row gap-6">
-                <div class="flex flex-wrap gap-2 w-full">
-                    <label for="email">{{ 'profile.email' | translate }}</label>
+            <div class="grid grid-cols-12 gap-4">
+                <label for="name3" class="flex items-center col-span-12 mb-2 md:col-span-2 md:mb-0">{{ 'user.role' |
+                    translate }}</label>
+                <div class="col-span-12 md:col-span-10">
+                    <input pInputText id="name3" [disabled]="true" value="{{ currentUser?.role }}" type="text" />
+                </div>
+            </div>
+
+            <div class="flex flex-wrap gap-6">
+                <div class="flex flex-col grow md:basis-0 basis-full gap-2">
+                    <label for="firstname">{{ 'user.firstname' | translate }}</label>
+                    <input formControlName="firstname" pInputText id="firstname" type="text" />
+                    <p-message
+                        *ngIf="profileForm.get('firstname')?.touched && profileForm.get('firstname')?.hasError('required')"
+                        severity="error" variant="simple" size="small">{{ 'user.firstname-required' | translate
+                        }}</p-message>
+                </div>
+                <div class="flex flex-col grow md:basis-0 basis-full gap-2">
+                    <label for="lastname">{{ 'user.lastname' | translate }}</label>
+                    <input formControlName="lastname" pInputText id="lastname" type="text" />
+                    <p-message
+                        *ngIf="profileForm.get('lastname')?.touched && profileForm.get('lastname')?.hasError('required')"
+                        severity="error" variant="simple" size="small">{{ 'user.lastname-required' | translate
+                        }}</p-message>
+                </div>
+            </div>
+
+            <div class="flex flex-wrap gap-6">
+                <div class="flex flex-col grow md:basis-0 basis-full gap-2">
+                    <label for="email">{{ 'user.email' | translate }}</label>
                     <input formControlName="email" pInputText id="email" type="text" />
+                    <p-message
+                        *ngIf="profileForm.get('email')?.touched && profileForm.get('email')?.hasError('required')"
+                        severity="error" variant="simple" size="small">{{ 'user.email-required' | translate
+                        }}</p-message>
+                </div>
+                <div class="flex flex-col grow md:basis-0 basis-full gap-2">
+                    <label for="phoneNumber">{{ 'user.phone-number' | translate }}</label>
+                    <input formControlName="phoneNumber" pInputText id="phoneNumber" type="text" />
+                    <p-message
+                        *ngIf="profileForm.get('phoneNumber')?.touched && profileForm.get('phoneNumber')?.errors"
+                        severity="error" variant="simple" size="small">{{ 'user.phone-number-incorrect' | translate
+                        }}</p-message>
                 </div>
             </div>
-
-            <!-- <div class="flex flex-wrap">
-                <label for="address">Address</label>
-                <textarea pTextarea id="address" rows="4"></textarea>
-            </div> -->
-
-            <!-- <div class="flex flex-col md:flex-row gap-6">
-                <div class="flex flex-wrap gap-2 w-full">
-                    <label for="state">State</label>
-                    <p-select id="state" [options]="dropdownItems" optionLabel="name" placeholder="Select One"
-                        class="w-full"></p-select>
-                </div>
-                <div class="flex flex-wrap gap-2 w-full">
-                    <label for="zip">Zip</label>
-                    <input pInputText id="zip" type="text" />
-                </div>
-            </div> -->
 
             <div class="flex flex-col md:flex-row gap-6">
                 <div class="flex flex-wrap justify-end gap-2 w-full">
-                    <p-button [disabled]="loading" (click)="saveProfile()">
+                    <p-button type="submit" [disabled]="loading" (click)="saveProfile()">
                         <i *ngIf="loading" class="pi pi-spin pi-spinner"></i>
-                        <i *ngIf="!loading" class="pi pi-check"></i>
-                        Save
+                        {{ 'actions.update' | translate}}
                     </p-button>
                 </div>
             </div>
         </div>
     </form>
 </p-fluid>
+
+<p-fluid>
+    <form [formGroup]="passwordForm" class="flex mt-8">
+        <div class="card flex flex-col gap-6 w-full">
+
+            <div class="font-semibold text-2xl mb-4">{{ 'profile.password-title' | translate }}</div>
+
+            <div class="flex flex-wrap gap-6">
+                <div class="flex flex-col grow md:basis-0 basis-full gap-2">
+                    <label for="password">{{ 'user.password' | translate }}</label>
+                    <input formControlName="password" pInputText id="password" type="password" />
+                    <p-message
+                        *ngIf="passwordForm.get('password')?.touched && passwordForm.get('password')?.errors"
+                        severity="error" variant="simple" size="small">{{ 'user.password-incorrect' | translate
+                        }}</p-message>
+                </div>
+                <div class="flex flex-col grow md:basis-0 basis-full gap-2">
+                    <label for="confirmPassword">{{ 'user.confirm-password' | translate }}</label>
+                    <input formControlName="confirmPassword" pInputText id="confirmPassword" type="password" />
+                    <p-message
+                        *ngIf="passwordForm.get('confirmPassword')?.touched && passwordForm.get('confirmPassword')?.errors"
+                        severity="error" variant="simple" size="small">{{ 'user.confirm-password-incorrect' | translate
+                        }}</p-message>
+                </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row gap-6">
+                <div class="flex flex-wrap justify-end gap-2 w-full">
+                    <p-button type="submit" [disabled]="loadingPassword" (click)="updatePassword()">
+                        <i *ngIf="loadingPassword" class="pi pi-spin pi-spinner"></i>
+                        {{ 'actions.update' | translate}}
+                    </p-button>
+                </div>
+            </div>
+        </div>
+    </form>
+</p-fluid>
+<p-toast />

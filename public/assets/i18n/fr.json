@@ -11,7 +11,8 @@
         "profile": "Profil"
     },
     "actions": {
-        "save": "Enregister"
+        "save": "Enregister",
+        "update": "Mise à jour"
     },
     "footer": {
         "right-reserved": "Tous droits réservés"

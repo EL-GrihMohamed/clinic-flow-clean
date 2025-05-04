@@ -33,7 +33,7 @@ export class Login implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.authService.getUser().subscribe({
+        this.authService.getProfile().subscribe({
             next: res => {
                 if (res.success)
                     this.router.navigate(["/dashboard"]);
@@ -41,7 +41,7 @@ export class Login implements OnInit {
             error: () => { }
         });
         this.loginForm = this.fb.group({
-            userName: ['', Validators.required],
+            username: ['', Validators.required],
             password: ['', Validators.required]
         });
     }
@@ -49,13 +49,15 @@ export class Login implements OnInit {
     onLogin() {
         if (this.loginForm.invalid) {
             this.loginForm.markAllAsTouched();
+            this.loginForm.controls['username'].markAsDirty();
+            this.loginForm.controls['password'].markAsDirty();
             return;
         }
         this.loading = true;
 
-        const { userName, password } = this.loginForm.value;
+        const { username, password } = this.loginForm.value;
 
-        this.authService.login(userName, password).subscribe({
+        this.authService.login(username, password).subscribe({
             next: res => {
                 if (!res.accessToken)
                     this.errMessage = this.translate.instant("login.invalid");

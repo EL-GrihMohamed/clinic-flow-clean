@@ -11,7 +11,9 @@
         "profile": "Profile"
     },
     "actions": {
-        "save": "Save"
+        "title": "Actions",
+        "save": "Save",
+        "update": "Update"
     },
     "footer": {
         "right-reserved": "All rights reserved"
@@ -33,7 +35,24 @@
     },
     "profile": {
         "title": "Profile",
-        "fullName": "Fullname",
-        "email": "Email"
+        "password-title": "Update password"
+    },
+    "user": {
+        "title": "Manage Users",
+        "details": "User details",
+        "username": "Username",
+        "firstname": "Firstname",
+        "lastname": "Lastname",
+        "email": "Email",
+        "phone-number": "Phone number",
+        "role": "Role",
+        "password": "Password",
+        "confirm-password": "Confirm password",
+        "firstname-required": "Firstname required",
+        "lastname-required": "Lastname required",
+        "email-required": "Email required",
+        "phone-number-incorrect": "Phone Number Incorret",
+        "password-incorrect": "Must include uppercase, lowercase, number & special character.",
+        "confirm-password-incorrect": "Password doesn't match"
     }
 }
