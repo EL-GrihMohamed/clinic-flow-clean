@@ -21,12 +21,12 @@ export class UserService {
     });
   }
 
-  create(user: User): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(`/api/add-user`, user);
+  create(user: User): Observable<{ success: boolean, message: string }> {
+    return this.http.post<{ success: boolean, message: string }>(`/api/add-user`, user);
   }
 
-  update(user: User) {
-    return this.http.patch<LoginResponse>(`/api/users`, user);
+  update(user: User): Observable<{ success: boolean, message: string }> {
+    return this.http.patch<{ success: boolean, message: string }>(`/api/users`, user);
   }
 
   delete(id: string): Observable<{ success: boolean, message: string }> {

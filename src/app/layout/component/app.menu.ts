@@ -26,7 +26,7 @@ export class AppMenu {
                 label: 'Home',
                 items: [
                     { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/dashboard'], hasRole: ['doctor'] },
-                    { label: 'Users', icon: 'pi pi-fw pi-users', routerLink: ['/users'], hasRole: ['all'] },
+                    { label: 'Users', icon: 'pi pi-fw pi-users', routerLink: ['/users'], hasRole: ['admin'] },
                     { label: 'Patients', icon: 'pi pi-fw pi-address-book', routerLink: ['/patients'], hasRole: ['doctor', 'reception'] },
                     { label: 'Visit', icon: 'pi pi-fw pi-book', routerLink: ['/visit'], hasRole: ['doctor'] },
                 ]

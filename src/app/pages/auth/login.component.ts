@@ -35,7 +35,7 @@ export class Login implements OnInit {
     ngOnInit() {
         this.authService.getProfile().subscribe({
             next: res => {
-                if (res.success)
+                if (res?.success)
                     this.router.navigate(["/dashboard"]);
             },
             error: () => { }
@@ -59,7 +59,7 @@ export class Login implements OnInit {
 
         this.authService.login(username, password).subscribe({
             next: res => {
-                if (!res.accessToken)
+                if (!res?.accessToken)
                     this.errMessage = this.translate.instant("login.invalid");
                 else {
                     this.storageService.setToken(res.accessToken);

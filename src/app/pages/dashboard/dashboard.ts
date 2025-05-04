@@ -8,7 +8,7 @@ import { ChartModule } from 'primeng/chart';
 
 @Component({
     selector: 'app-dashboard',
-    imports: [StatsWidget, ChartModule, RecentSalesWidget, BestSellingWidget, RevenueStreamWidget, NotificationsWidget],
+    imports: [StatsWidget, ChartModule, BestSellingWidget, RevenueStreamWidget],
     template: `
         <div class="grid grid-cols-12 gap-8">
             <div class="card col-span-12 !mb-0 !bg-primary !text-xl flex justify-center gap-4">
