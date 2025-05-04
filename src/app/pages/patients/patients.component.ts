@@ -79,7 +79,7 @@ export class PatientsComponent {
 
   deleteItem(patient: Patient) {
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete ' + patient.firstname + '?',
+      message: 'Are you sure you want to delete ' + patient.firstName + '?',
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {

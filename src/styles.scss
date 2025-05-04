@@ -14,3 +14,7 @@
 .layout-topbar-action{
     @apply rounded-xl !important;
 }
+
+.zxing-scanner video {
+    @apply rounded-xl;
+  }
