@@ -23,8 +23,8 @@ import { startWith } from 'rxjs';
   providers: [MessageService]
 })
 export class ProfileComponent implements OnInit {
-  loading = false;
-  loadingPassword = false;
+  loading = true;
+  loadingPassword = true;
   profileForm!: FormGroup;
   passwordForm!: FormGroup;
   currentUser?: User;
@@ -66,6 +66,7 @@ export class ProfileComponent implements OnInit {
 
   getUser(): void {
     this.loading = true;
+    this.loadingPassword = true;
     this.authService.getProfile().subscribe({
       next: res => {
         if (res.success) {
@@ -76,9 +77,11 @@ export class ProfileComponent implements OnInit {
           this.profileForm.controls['phoneNumber'].setValue(res.user.phoneNumber);
         }
         this.loading = false;
+        this.loadingPassword = false;
       },
       error: err => {
         this.loading = false;
+        this.loadingPassword = false;
       }
     })
   }

@@ -11,9 +11,12 @@
         "profile": "Profile"
     },
     "actions": {
+        "new": "New",
         "title": "Actions",
+        "cancel": "Cancel",
         "save": "Save",
-        "update": "Update"
+        "update": "Update",
+        "export": "Export"
     },
     "footer": {
         "right-reserved": "All rights reserved"
@@ -46,12 +49,13 @@
         "email": "Email",
         "phone-number": "Phone number",
         "role": "Role",
+        "role-required": "Role required",
         "password": "Password",
         "confirm-password": "Confirm password",
         "firstname-required": "Firstname required",
         "lastname-required": "Lastname required",
         "email-required": "Email required",
-        "phone-number-incorrect": "Phone Number Incorret",
+        "phone-number-incorrect": "Phone Number incorrect",
         "password-incorrect": "Must include uppercase, lowercase, number & special character.",
         "confirm-password-incorrect": "Password doesn't match"
     }

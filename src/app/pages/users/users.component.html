@@ -1,33 +1,24 @@
 <p-toast></p-toast>
 <p-toolbar styleClass="mb-6">
     <ng-template #start>
-        <p-button label="New" icon="pi pi-plus" severity="secondary" class="mr-2" (onClick)="openNew()" />
-        <p-button severity="secondary" label="Delete" icon="pi pi-trash" outlined (onClick)="deleteSelectedItems()" [disabled]="!selectedUsers || !selectedUsers.length" />
+        <p-button label="{{ 'actions.new' | translate }}" icon="pi pi-plus" severity="secondary" class="mr-2"
+            (onClick)="openNew()" />
     </ng-template>
 
     <ng-template #end>
-        <p-button label="Export" icon="pi pi-upload" severity="secondary" (onClick)="exportCSV()" />
+        <p-button label="{{ 'actions.export' | translate }}" icon="pi pi-upload" severity="secondary"
+            (onClick)="exportCSV()" />
     </ng-template>
 </p-toolbar>
 
-<p-table
-    #dt
-    [value]="users()"
-    [rows]="10"
-    [columns]="cols"
-    [paginator]="true"
-    [globalFilterFields]="['name', 'country.name', 'representative.name', 'status']"
-    [tableStyle]="{ 'min-width': '75rem', 'table-layout': 'auto' }"
-    [(selection)]="selectedUsers"
-    [rowHover]="true"
-    dataKey="id"
-    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} users"
-    [showCurrentPageReport]="true"
-    [rowsPerPageOptions]="[10, 20, 30]"
->
+<p-table #dt [value]="users()" [rows]="10" [columns]="cols" [paginator]="true"
+    [globalFilterFields]="['username', 'firstname', 'lastname', 'email', 'phoneNumber', 'role']"
+    [tableStyle]="{ 'min-width': '75rem', 'table-layout': 'auto' }" [rowHover]="true" dataKey="id"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} users" [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[10, 20, 30]">
     <ng-template #caption>
         <div class="flex items-center justify-between">
-            <h5 class="m-0">Manage Users</h5>
+            <h5 class="m-0">{{ 'user.title' | translate }}</h5>
             <p-iconfield>
                 <p-inputicon styleClass="pi pi-search" />
                 <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..." />
@@ -68,11 +59,11 @@
     <ng-template #body let-user>
         <tr>
             <td>{{ user?.username }}</td>
-            <td >{{ user?.firstname }}</td>
+            <td>{{ user?.firstname }}</td>
             <td>{{ user?.lastname }}</td>
             <td>{{ user?.email }}</td>
-            <td >{{ user?.phoneNumber }}</td>
-            <td >{{ user?.role }}</td>
+            <td>{{ user?.phoneNumber }}</td>
+            <td>{{ user?.role }}</td>
             <td>
                 <p-button icon="pi pi-pencil" class="mr-2" [outlined]="true" (click)="editItem(user)" />
                 <p-button icon="pi pi-trash" severity="danger" [outlined]="true" (click)="deleteItem(user)" />
@@ -81,63 +72,88 @@
     </ng-template>
 </p-table>
 
-<p-dialog [(visible)]="userDialog" [style]="{ width: '450px' }" header="User Details" [modal]="true">
+<p-dialog [(visible)]="userDialog" [style]="{ maxWidth: '95%', width: '700px' }"
+    header="{{ 'user.details' | translate }}" [modal]="true">
     <ng-template #content>
-        <div class="flex flex-col gap-6">
-            <!-- <img [src]="'https://primefaces.org/cdn/primeng/images/demo/user/' + user.image" [alt]="user.image" class="block m-auto pb-4" *ngIf="user.image" /> -->
+        <form [formGroup]="userForm" class="flex flex-col gap-6">
             <div>
-                <label for="name" class="block font-bold mb-3">Name</label>
-                <input type="text" pInputText id="name" [(ngModel)]="user.firstname" required autofocus fluid />
-                <small class="text-red-500" *ngIf="submitted && !user?.firstname">Name is required.</small>
-            </div>
-            <div>
-                <label for="description" class="block font-bold mb-3">Description</label>
-                <textarea id="description" pTextarea [(ngModel)]="user.lastname" required rows="3" cols="20" fluid></textarea>
+                <label for="username" class="block font-bold mb-3">{{ 'user.username' | translate }}</label>
+                <input type="text" pInputText id="username" formControlName="username" required autofocus fluid />
+                <p-message *ngIf="userForm.get('username')?.touched && userForm.get('username')?.hasError('required')"
+                    severity="error" variant="simple" size="small">{{ 'user.username-required' | translate
+                    }}</p-message>
             </div>
 
             <div>
-                <label for="inventoryStatus" class="block font-bold mb-3">Inventory Status</label>
-                <!-- <p-select [(ngModel)]="user.inventoryStatus" inputId="inventoryStatus" [options]="statuses" optionLabel="label" optionValue="label" placeholder="Select a Status" fluid /> -->
+                <label for="role" class="block font-bold mb-3">{{ 'user.role' | translate }}</label>
+                <p-select class="w-full" formControlName="role" [options]="roleValues" optionLabel="name"
+                    optionValue="code" placeholder="Select" />
+                <p-message *ngIf="userForm.get('role')?.touched && userForm.get('role')?.errors" severity="error"
+                    variant="simple" size="small">{{ 'user.role-required' | translate
+                    }}</p-message>
+            </div>
+
+            <div class="flex flex-wrap gap-6">
+                <div class="flex flex-col grow md:basis-0 basis-full gap-2">
+                    <label class="block font-bold" for="firstname">{{ 'user.firstname' | translate }}</label>
+                    <input pInputText id="firstname" type="text" formControlName="firstname" />
+                    <p-message
+                        *ngIf="userForm.get('firstname')?.touched && userForm.get('firstname')?.hasError('required')"
+                        severity="error" variant="simple" size="small">{{ 'user.firstname-required' | translate
+                        }}</p-message>
+                </div>
+                <div class="flex flex-col grow md:basis-0 basis-full gap-2">
+                    <label class="block font-bold" for="lastname">{{ 'user.lastname' | translate }}</label>
+                    <input pInputText id="lastname" type="text" formControlName="lastname">
+                    <p-message
+                        *ngIf="userForm.get('lastname')?.touched && userForm.get('lastname')?.hasError('required')"
+                        severity="error" variant="simple" size="small">{{ 'user.lastname-required' | translate
+                        }}</p-message>
+                </div>
             </div>
 
             <div>
-                <span class="block font-bold mb-4">Category</span>
-                <div class="grid grid-cols-12 gap-4">
-                    <div class="flex items-center gap-2 col-span-6">
-                        <!-- <p-radiobutton id="category1" name="category" value="Accessories" [(ngModel)]="user.isMinor" /> -->
-                        <label for="category1">Accessories</label>
-                    </div>
-                    <div class="flex items-center gap-2 col-span-6">
-                        <p-radiobutton id="category2" name="category" value="Clothing"  />
-                        <label for="category2">Clothing</label>
-                    </div>
-                    <div class="flex items-center gap-2 col-span-6">
-                        <p-radiobutton id="category3" name="category" value="Electronics"/>
-                        <label for="category3">Electronics</label>
-                    </div>
-                    <div class="flex items-center gap-2 col-span-6">
-                        <p-radiobutton id="category4" name="category" value="Fitness" />
-                        <label for="category4">Fitness</label>
-                    </div>
-                </div>
+                <label for="email" class="block font-bold mb-3">{{ 'user.email' | translate }}</label>
+                <input type="text" pInputText id="email" formControlName="email" required fluid />
+                <p-message *ngIf="userForm.get('email')?.touched && userForm.get('email')?.errors" severity="error"
+                    variant="simple" size="small">{{ 'user.email-required' | translate
+                    }}</p-message>
             </div>
 
-            <div class="grid grid-cols-12 gap-4">
-                <div class="col-span-6">
-                    <label for="price" class="block font-bold mb-3">Price</label>
-                    <!-- <p-inputnumber id="price" [(ngModel)]="user.id" mode="currency" currency="USD" locale="en-US" fluid /> -->
+            <div>
+                <label for="phoneNumber" class="block font-bold mb-3">{{ 'user.phone-number' | translate }}</label>
+                <input type="text" pInputText id="phoneNumber" formControlName="phoneNumber" required fluid />
+                <p-message *ngIf="userForm.get('phoneNumber')?.touched && userForm.get('phoneNumber')?.errors"
+                    severity="error" variant="simple" size="small">{{ 'user.phone-number-incorrect' | translate
+                    }}</p-message>
+            </div>
+
+            <div class="flex flex-wrap gap-6" *ngIf="!user?.id">
+                <div class="flex flex-col grow md:basis-0 basis-full gap-2">
+                    <label class="block font-bold" for="password">{{ 'user.password' | translate }}</label>
+                    <input pInputText id="password" type="password" formControlName="password">
+                    <p-message *ngIf="userForm.get('password')?.touched && userForm.get('password')?.errors"
+                        severity="error" variant="simple" size="small">{{ 'user.password-incorrect' | translate
+                        }}</p-message>
                 </div>
-                <div class="col-span-6">
-                    <label for="quantity" class="block font-bold mb-3">Quantity</label>
-                    <!-- <p-inputnumber id="quantity" [(ngModel)]="user.doctorId" fluid /> -->
+                <div class="flex flex-col grow md:basis-0 basis-full gap-2">
+                    <label class="block font-bold" for="confirmPassword">{{ 'user.confirm-password' | translate
+                        }}</label>
+                    <input pInputText id="confirmPassword" type="password" formControlName="confirmPassword" />
+                    <p-message
+                        *ngIf="userForm.get('confirmPassword')?.touched && userForm.get('confirmPassword')?.errors"
+                        severity="error" variant="simple" size="small">{{ 'user.confirm-password-incorrect' | translate
+                        }}</p-message>
                 </div>
             </div>
-        </div>
+        </form>
     </ng-template>
 
     <ng-template #footer>
-        <p-button label="Cancel" icon="pi pi-times" text (click)="hideDialog()" />
-        <p-button label="Save" icon="pi pi-check" (click)="saveItem()" />
+        <p-button [disabled]="loadingUser" label="{{ 'actions.cancel' | translate }}" icon="pi pi-times" text
+            (click)="hideDialog()" />
+        <p-button [disabled]="loadingUser" label="{{ 'actions.save' | translate }}" icon="pi pi-check"
+            (click)="saveItem()" />
     </ng-template>
 </p-dialog>
 

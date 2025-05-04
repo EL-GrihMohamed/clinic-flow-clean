@@ -11,8 +11,12 @@
         "profile": "Profil"
     },
     "actions": {
+        "new": "Nouveau",
+        "title": "Actes",
+        "cancel": "Annuler",
         "save": "Enregister",
-        "update": "Mise à jour"
+        "update": "Mise à jour",
+        "export": "Exporter"
     },
     "footer": {
         "right-reserved": "Tous droits réservés"
@@ -34,7 +38,25 @@
     },
     "profile": {
         "title": "Profil",
-        "fullName": "Nom et prénom",
-        "email": "E-mail"
+        "password-title": "Mettre à jour le mot de passe"
+    },
+    "user": {
+        "title": "Gérer les utilisateurs",
+        "details": "Détails de l'utilisateur",
+        "username": "Nom d'utilisateur",
+        "firstname": "Prénom",
+        "lastname": "Nom",
+        "email": "E-mail",
+        "phone-number": "Numéro de téléphone",
+        "role": "Rôle",
+        "role-required": "Rôle requis",
+        "password": "Mot de passe",
+        "confirm-password": "Confirmez le mot de passe",
+        "firstname-required": "Prénom requis",
+        "lastname-required": "Nom de famille requis",
+        "email-required": "Courriel requis",
+        "phone-number-incorrect": "Numéro de téléphone incorrect",
+        "password-incorrect": "Doit inclure des majuscules, des minuscules, des chiffres et des caractères spéciaux.",
+        "confirm-password-incorrect": "Le mot de passe ne correspond pas"
     }
 }
