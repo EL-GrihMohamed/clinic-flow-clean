@@ -7,11 +7,11 @@ export const authGuard: CanActivateFn = (route, state) => {
   const auth = inject(AuthService);
   const router = inject(Router);
 
-  return auth.getUser().pipe(
+  return auth.getProfile().pipe(
     // if the call succeeds, the token is valid → allow navigation
     map(res => {
       if (res.success) {
-        auth.setRoles([res.user.role.toLowerCase()]);
+        auth.setRoles([res?.user?.role?.toLowerCase() || '']);
         return true;
       }
       return false;

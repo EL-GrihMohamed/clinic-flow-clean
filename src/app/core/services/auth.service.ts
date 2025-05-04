@@ -16,17 +16,21 @@ export class AuthService {
     private storage: LocalStorageService
   ) { }
 
-  public login(userName: string, password: string): Observable<LoginResponse> {
+  public login(username: string, password: string): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`/api/signin`, {
-      userName, password
+      username, password
     });
   }
 
-  public getUser(): Observable<{ success: boolean, user: User }> {
+  public getProfile(): Observable<{ success: boolean, user: User }> {
     const headers = new HttpHeaders({
       'Accept': 'application/json'
     });
     return this.http.get<{ success: boolean, user: User }>(`/api/user/me`, { headers });
+  }
+
+  public UpdateProfile(profile: User): Observable<{success: boolean, message: string}> {
+    return this.http.patch<{success: boolean, message: string}>(`/api/user/me`, profile);
   }
 
   getRoles(): string[] {

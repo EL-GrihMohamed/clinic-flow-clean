@@ -6,12 +6,15 @@ import { AppTopbar } from './app.topbar';
 import { AppSidebar } from './app.sidebar';
 import { AppFooter } from './app.footer';
 import { LayoutService } from '../service/layout.service';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @Component({
     selector: 'app-layout',
     standalone: true,
-    imports: [CommonModule, AppTopbar, AppSidebar, RouterModule, AppFooter],
+    imports: [CommonModule, ToastModule, AppTopbar, AppSidebar, RouterModule, AppFooter],
     template: `<div class="layout-wrapper" [ngClass]="containerClass">
+        <p-toast />
         <app-topbar></app-topbar>
         <app-sidebar></app-sidebar>
         <div class="layout-main-container">
@@ -21,7 +24,8 @@ import { LayoutService } from '../service/layout.service';
             <app-footer></app-footer>
         </div>
         <div class="layout-mask animate-fadein"></div>
-    </div> `
+    </div> `,
+    providers: [MessageService]
 })
 export class AppLayout {
     overlayMenuOpenSubscription: Subscription;
