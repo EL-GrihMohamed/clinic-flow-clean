@@ -95,12 +95,12 @@
             <!-- <img [src]="'https://primefaces.org/cdn/primeng/images/demo/patient/' + patient.image" [alt]="patient.image" class="block m-auto pb-4" *ngIf="patient.image" /> -->
             <div>
                 <label for="name" class="block font-bold mb-3">Name</label>
-                <input type="text" pInputText id="name" [(ngModel)]="patient.firstname" required autofocus fluid />
-                <small class="text-red-500" *ngIf="submitted && !patient?.firstname">Name is required.</small>
+                <input type="text" pInputText id="name" [(ngModel)]="patient.firstName" required autofocus fluid />
+                <small class="text-red-500" *ngIf="submitted && !patient?.firstName">Name is required.</small>
             </div>
             <div>
                 <label for="description" class="block font-bold mb-3">Description</label>
-                <textarea id="description" pTextarea [(ngModel)]="patient.lastname" required rows="3" cols="20" fluid></textarea>
+                <textarea id="description" pTextarea [(ngModel)]="patient.firstName" required rows="3" cols="20" fluid></textarea>
             </div>
 
             <div>
@@ -133,11 +133,11 @@
             <div class="grid grid-cols-12 gap-4">
                 <div class="col-span-6">
                     <label for="price" class="block font-bold mb-3">Price</label>
-                    <p-inputnumber id="price" [(ngModel)]="patient.doctorId" mode="currency" currency="USD" locale="en-US" fluid />
+                    <p-inputnumber id="price" mode="currency" currency="USD" locale="en-US" fluid />
                 </div>
                 <div class="col-span-6">
                     <label for="quantity" class="block font-bold mb-3">Quantity</label>
-                    <p-inputnumber id="quantity" [(ngModel)]="patient.doctorId" fluid />
+                    <p-inputnumber id="quantity" fluid />
                 </div>
             </div>
         </div>

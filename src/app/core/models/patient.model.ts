@@ -4,18 +4,18 @@ export interface Patient {
     id?: string;
     ipp?: string;
     cin?: string;
-    firstname?: string;
-    lastname?: string;
+    firstName?: string;
+    lastName?: string;
     phoneNumber?: string;
     address?: string;
     city?: string;
     dateOfBirth?: Date;
     gender?: Genre;
-    isMinor?: boolean;
     hasInsurance?: boolean;
+    insuranceName?: string;
+    isMinor?: boolean;
+    referringDoctor?: number;
+    companionGuid?: number;
     qrCode?: string;
-    insuranceId?: string;
-    doctorId?: number;
-    companionId?: number;
     createdAt?: Date;
 }
