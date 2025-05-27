@@ -1,152 +1,257 @@
+<!-- Toolbar -->
 <p-toolbar styleClass="mb-6">
-    <ng-template #start>
-        <p-button label="New" icon="pi pi-plus" severity="secondary" class="mr-2" (onClick)="openNew()" />
-        <p-button severity="secondary" label="Delete" icon="pi pi-trash" outlined (onClick)="deleteSelectedItems()" [disabled]="!selectedPatients || !selectedPatients.length" />
-    </ng-template>
+  <ng-template #start>
+    <p-button label="New Patient" icon="pi pi-plus" severity="secondary" class="mr-2" (onClick)="openNew()" />
+    <p-button severity="secondary" label="Delete" icon="pi pi-trash" outlined (onClick)="deleteSelectedItems()" 
+              [disabled]="!selectedPatients || !selectedPatients.length" />
+  </ng-template>
 
-    <ng-template #end>
-        <p-button label="Export" icon="pi pi-upload" severity="secondary" (onClick)="exportCSV()" />
-    </ng-template>
+  <ng-template #end>
+    <p-button label="Export" icon="pi pi-upload" severity="secondary" (onClick)="exportCSV()" />
+  </ng-template>
 </p-toolbar>
 
+<!-- Patients Table -->
 <p-table
-    #dt
-    [value]="patients()"
-    [rows]="10"
-    [columns]="cols"
-    [paginator]="true"
-    [globalFilterFields]="['name', 'country.name', 'representative.name', 'status']"
-    [tableStyle]="{ 'min-width': '75rem' }"
-    [(selection)]="selectedPatients"
-    [rowHover]="true"
-    dataKey="id"
-    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} patients"
-    [showCurrentPageReport]="true"
-    [rowsPerPageOptions]="[10, 20, 30]"
+  #dt
+  [value]="patients()"
+  [rows]="10"
+  [columns]="cols"
+  [paginator]="true"
+  [globalFilterFields]="['firstName', 'lastName', 'cin', 'phoneNumber', 'entryType', 'verificationStatus']"
+  [tableStyle]="{ 'min-width': '75rem' }"
+  [(selection)]="selectedPatients"
+  [rowHover]="true"
+  dataKey="patientGuid"
+  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} patients"
+  [showCurrentPageReport]="true"
+  [rowsPerPageOptions]="[10, 20, 30]"
+  [loading]="loading"
 >
-    <ng-template #caption>
-        <div class="flex items-center justify-between">
-            <h5 class="m-0">Manage Patients</h5>
-            <p-iconfield>
-                <p-inputicon styleClass="pi pi-search" />
-                <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..." />
-            </p-iconfield>
-        </div>
-    </ng-template>
-    <ng-template #header>
-        <tr>
-            <th style="width: 3rem">
-                <p-tableHeaderCheckbox />
-            </th>
-            <th style="min-width: 16rem">Code</th>
-            <th pSortableColumn="name" style="min-width:16rem">
-                Name
-                <p-sortIcon field="name" />
-            </th>
-            <th>Image</th>
-            <th pSortableColumn="price" style="min-width: 8rem">
-                Price
-                <p-sortIcon field="price" />
-            </th>
-            <th pSortableColumn="category" style="min-width:10rem">
-                Category
-                <p-sortIcon field="category" />
-            </th>
-            <th pSortableColumn="rating" style="min-width: 12rem">
-                Reviews
-                <p-sortIcon field="rating" />
-            </th>
-            <th pSortableColumn="inventoryStatus" style="min-width: 12rem">
-                Status
-                <p-sortIcon field="inventoryStatus" />
-            </th>
-            <th style="min-width: 12rem"></th>
-        </tr>
-    </ng-template>
-    <ng-template #body let-patient>
-        <tr>
-            <td style="width: 3rem">
-                <p-tableCheckbox [value]="patient" />
-            </td>
-            <td style="min-width: 12rem">{{ patient.code }}</td>
-            <td style="min-width: 16rem">{{ patient.name }}</td>
-            <td>
-                <img [src]="'https://primefaces.org/cdn/primeng/images/demo/patient/' + patient.image" [alt]="patient.name" style="width: 64px" class="rounded" />
-            </td>
-            <td>{{ patient.price }}</td>
-            <td>{{ patient.category }}</td>
-            <td>
-                <p-rating [(ngModel)]="patient.rating" [readonly]="true" />
-            </td>
-            <td>
-                <p-tag [value]="patient.inventoryStatus" [severity]="getSeverity(patient.inventoryStatus)" />
-            </td>
-            <td>
-                <p-button icon="pi pi-pencil" class="mr-2" [outlined]="true" (click)="editItem(patient)" />
-                <p-button icon="pi pi-trash" severity="danger" [outlined]="true" (click)="deleteItem(patient)" />
-            </td>
-        </tr>
-    </ng-template>
+  <ng-template #caption>
+    <div class="flex items-center justify-between">
+      <h5 class="m-0">Manage Patients</h5>
+      <p-iconfield>
+        <p-inputicon styleClass="pi pi-search" />
+        <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..." />
+      </p-iconfield>
+    </div>
+  </ng-template>
+  
+  <ng-template #header>
+    <tr>
+      <th style="width: 3rem">
+        <p-tableHeaderCheckbox />
+      </th>
+      <th style="min-width: 8rem">IPP</th>
+      <th pSortableColumn="firstName" style="min-width:12rem">
+        First Name
+        <p-sortIcon field="firstName" />
+      </th>
+      <th pSortableColumn="lastName" style="min-width:12rem">
+        Last Name
+        <p-sortIcon field="lastName" />
+      </th>
+      <th style="min-width: 10rem">CIN</th>
+      <th style="min-width: 12rem">Phone</th>
+      <th pSortableColumn="entryType" style="min-width:10rem">
+        Entry Type
+        <p-sortIcon field="entryType" />
+      </th>
+      <th pSortableColumn="verificationStatus" style="min-width: 10rem">
+        Status
+        <p-sortIcon field="verificationStatus" />
+      </th>
+      <th style="min-width: 8rem">QR Code</th>
+      <th style="min-width: 14rem">Actions</th>
+    </tr>
+  </ng-template>
+  
+  <ng-template #body let-patient>
+    <tr>
+      <td style="width: 3rem">
+        <p-tableCheckbox [value]="patient" />
+      </td>
+      <td>{{ patient.ipp || '-' }}</td>
+      <td>{{ patient.firstName || '-' }}</td>
+      <td>{{ patient.lastName || '-' }}</td>
+      <td>{{ patient.cin || '-' }}</td>
+      <td>{{ patient.phoneNumber || '-' }}</td>
+      <td>
+        <p-tag [value]="patient.entryType" [severity]="patient.entryType === 'adult' ? 'success' : 'info'" />
+      </td>
+      <td>
+        <p-tag [value]="patient.verificationStatus" [severity]="getSeverity(patient.verificationStatus!)" />
+      </td>
+      <td>
+        <p-button *ngIf="patient.qrcodeUrl" icon="pi pi-qrcode" size="small" [outlined]="true" 
+                  (click)="showQrCode(patient)" severity="info" />
+        <span *ngIf="!patient.qrcodeUrl">-</span>
+      </td>
+      <td>
+        <p-button icon="pi pi-pencil" class="mr-2" size="small" [outlined]="true" (click)="editItem(patient)" />
+        <p-button icon="pi pi-trash" severity="danger" size="small" [outlined]="true" (click)="deleteItem(patient)" />
+      </td>
+    </tr>
+  </ng-template>
 </p-table>
 
-<p-dialog [(visible)]="patientDialog" [style]="{ width: '450px' }" header="Patient Details" [modal]="true">
-    <ng-template #content>
-        <div class="flex flex-col gap-6">
-            <!-- <img [src]="'https://primefaces.org/cdn/primeng/images/demo/patient/' + patient.image" [alt]="patient.image" class="block m-auto pb-4" *ngIf="patient.image" /> -->
-            <div>
-                <label for="name" class="block font-bold mb-3">Name</label>
-                <input type="text" pInputText id="name" [(ngModel)]="patient.firstName" required autofocus fluid />
-                <small class="text-red-500" *ngIf="submitted && !patient?.firstName">Name is required.</small>
-            </div>
-            <div>
-                <label for="description" class="block font-bold mb-3">Description</label>
-                <textarea id="description" pTextarea [(ngModel)]="patient.firstName" required rows="3" cols="20" fluid></textarea>
-            </div>
-
-            <div>
-                <label for="inventoryStatus" class="block font-bold mb-3">Inventory Status</label>
-                <!-- <p-select [(ngModel)]="patient.inventoryStatus" inputId="inventoryStatus" [options]="statuses" optionLabel="label" optionValue="label" placeholder="Select a Status" fluid /> -->
-            </div>
-
-            <div>
-                <span class="block font-bold mb-4">Category</span>
-                <div class="grid grid-cols-12 gap-4">
-                    <div class="flex items-center gap-2 col-span-6">
-                        <p-radiobutton id="category1" name="category" value="Accessories" [(ngModel)]="patient.isMinor" />
-                        <label for="category1">Accessories</label>
-                    </div>
-                    <div class="flex items-center gap-2 col-span-6">
-                        <p-radiobutton id="category2" name="category" value="Clothing" [(ngModel)]="patient.isMinor" />
-                        <label for="category2">Clothing</label>
-                    </div>
-                    <div class="flex items-center gap-2 col-span-6">
-                        <p-radiobutton id="category3" name="category" value="Electronics" [(ngModel)]="patient.isMinor" />
-                        <label for="category3">Electronics</label>
-                    </div>
-                    <div class="flex items-center gap-2 col-span-6">
-                        <p-radiobutton id="category4" name="category" value="Fitness" [(ngModel)]="patient.isMinor" />
-                        <label for="category4">Fitness</label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-12 gap-4">
-                <div class="col-span-6">
-                    <label for="price" class="block font-bold mb-3">Price</label>
-                    <p-inputnumber id="price" mode="currency" currency="USD" locale="en-US" fluid />
-                </div>
-                <div class="col-span-6">
-                    <label for="quantity" class="block font-bold mb-3">Quantity</label>
-                    <p-inputnumber id="quantity" fluid />
-                </div>
-            </div>
+<!-- Patient Dialog -->
+<p-dialog [(visible)]="patientDialog" [style]="{ width: '700px' }" header="Patient Details" [modal]="true">
+  <ng-template #content>
+    <div class="flex flex-col gap-6">
+      
+      <!-- Basic Information -->
+      <div class="grid grid-cols-12 gap-4">
+        <div class="col-span-6">
+          <label for="firstName" class="block font-bold mb-3">First Name *</label>
+          <input type="text" pInputText id="firstName" [(ngModel)]="patient.firstName" required autofocus fluid />
+          <small class="text-red-500" *ngIf="submitted && !patient?.firstName">First name is required.</small>
         </div>
-    </ng-template>
+        <div class="col-span-6">
+          <label for="lastName" class="block font-bold mb-3">Last Name *</label>
+          <input type="text" pInputText id="lastName" [(ngModel)]="patient.lastName" required fluid />
+          <small class="text-red-500" *ngIf="submitted && !patient?.lastName">Last name is required.</small>
+        </div>
+      </div>
 
-    <ng-template #footer>
-        <p-button label="Cancel" icon="pi pi-times" text (click)="hideDialog()" />
-        <p-button label="Save" icon="pi pi-check" (click)="saveItem()" />
-    </ng-template>
+      <div class="grid grid-cols-12 gap-4">
+        <div class="col-span-6">
+          <label for="cin" class="block font-bold mb-3">CIN (National ID)</label>
+          <input type="text" pInputText id="cin" [(ngModel)]="patient.cin" fluid />
+        </div>
+        <div class="col-span-6">
+          <label for="phoneNumber" class="block font-bold mb-3">Phone Number</label>
+          <input type="text" pInputText id="phoneNumber" [(ngModel)]="patient.phoneNumber" fluid />
+        </div>
+      </div>
+
+      <!-- Entry Type and Status -->
+      <div class="grid grid-cols-12 gap-4">
+        <div class="col-span-6">
+          <label for="entryType" class="block font-bold mb-3">Entry Type *</label>
+          <p-select [(ngModel)]="patient.entryType" inputId="entryType" [options]="entryTypes" 
+                    optionLabel="label" optionValue="value" placeholder="Select Entry Type" fluid
+                    (onChange)="onEntryTypeChange()" />
+        </div>
+        <div class="col-span-6">
+          <label for="verificationStatus" class="block font-bold mb-3">Verification Status</label>
+          <p-select [(ngModel)]="patient.verificationStatus" inputId="verificationStatus" 
+                    [options]="verificationStatuses" optionLabel="label" optionValue="value" 
+                    placeholder="Select Status" fluid />
+        </div>
+      </div>
+
+      <!-- Additional Information -->
+      <div class="grid grid-cols-12 gap-4">
+        <div class="col-span-6">
+          <label for="dateOfBirth" class="block font-bold mb-3">Date of Birth</label>
+          <p-calendar [(ngModel)]="patient.dateOfBirth" inputId="dateOfBirth" 
+                      [showIcon]="true" fluid dateFormat="yy-mm-dd" />
+        </div>
+        <div class="col-span-6">
+          <label for="gender" class="block font-bold mb-3">Gender</label>
+          <p-select [(ngModel)]="patient.gender" inputId="gender" [options]="genders" 
+                    optionLabel="label" optionValue="value" placeholder="Select Gender" fluid />
+        </div>
+      </div>
+
+      <div>
+        <label for="address" class="block font-bold mb-3">Address</label>
+        <input type="text" pInputText id="address" [(ngModel)]="patient.address" fluid />
+      </div>
+
+      <!-- Insurance Information -->
+      <div class="grid grid-cols-12 gap-4">
+        <div class="col-span-6">
+          <div class="flex items-center gap-2">
+            <p-checkbox [(ngModel)]="patient.hasInsurance" inputId="hasInsurance" [binary]="true" />
+            <label for="hasInsurance" class="font-bold">Has Insurance</label>
+          </div>
+        </div>
+        <div class="col-span-6" *ngIf="patient.hasInsurance">
+          <label for="insuranceName" class="block font-bold mb-3">Insurance Name</label>
+          <input type="text" pInputText id="insuranceName" [(ngModel)]="patient.insuranceName" fluid />
+        </div>
+      </div>
+
+      <!-- Minor checkbox -->
+      <div *ngIf="patient.entryType !== 'adult'">
+        <div class="flex items-center gap-2">
+          <p-checkbox [(ngModel)]="patient.isMinor" inputId="isMinor" [binary]="true" />
+          <label for="isMinor" class="font-bold">Is Minor</label>
+        </div>
+      </div>
+
+      <!-- Companion Information -->
+      <div *ngIf="patient.companion || patient.entryType === 'minor' || patient.entryType === 'proxy'" 
+           class="border border-surface-200 rounded p-4">
+        <h6 class="text-lg font-bold mb-4">Companion Information</h6>
+        <div class="grid grid-cols-12 gap-4">
+          <div class="col-span-6">
+            <label for="companionName" class="block font-bold mb-3">Companion Full Name *</label>
+            <input type="text" pInputText id="companionName" [(ngModel)]="patient.companion!.fullName" 
+                   required fluid />
+            <small class="text-red-500" 
+                   *ngIf="submitted && (patient.entryType === 'minor' || patient.entryType === 'proxy') && !patient.companion?.fullName">
+              Companion name is required.
+            </small>
+          </div>
+          <div class="col-span-6">
+            <label for="companionPhone" class="block font-bold mb-3">Companion Phone *</label>
+            <input type="text" pInputText id="companionPhone" [(ngModel)]="patient.companion!.phone" 
+                   required fluid />
+            <small class="text-red-500" 
+                   *ngIf="submitted && (patient.entryType === 'minor' || patient.entryType === 'proxy') && !patient.companion?.phone">
+              Companion phone is required.
+            </small>
+          </div>
+        </div>
+        <div class="grid grid-cols-12 gap-4 mt-4">
+          <div class="col-span-12">
+            <label for="companionRelationship" class="block font-bold mb-3">Relationship *</label>
+            <p-select [(ngModel)]="patient.companion!.relationship" inputId="companionRelationship" 
+                      [options]="companionRelationships" optionLabel="label" optionValue="value" 
+                      placeholder="Select Relationship" fluid />
+            <small class="text-red-500" 
+                   *ngIf="submitted && (patient.entryType === 'minor' || patient.entryType === 'proxy') && !patient.companion?.relationship">
+              Companion relationship is required.
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notes -->
+      <div>
+        <label for="notes" class="block font-bold mb-3">Notes</label>
+        <textarea id="notes" pTextarea [(ngModel)]="patient.notes" rows="3" cols="20" fluid
+                  placeholder="Additional notes about the patient..."></textarea>
+      </div>
+
+    </div>
+  </ng-template>
+
+  <ng-template #footer>
+    <p-button label="Cancel" icon="pi pi-times" text (click)="hideDialog()" />
+    <p-button label="Save" icon="pi pi-check" (click)="saveItem()" />
+  </ng-template>
 </p-dialog>
 
+<!-- QR Code Dialog -->
+<p-dialog [(visible)]="qrCodeDialog" [style]="{ width: '400px' }" header="Patient QR Code" [modal]="true">
+  <ng-template #content>
+    <div class="flex flex-col items-center gap-4">
+      <img [src]="currentQrCodeUrl" alt="Patient QR Code" class="max-w-full" />
+      <p class="text-center text-sm text-gray-600">
+        Use this QR code for patient identification and quick access.
+      </p>
+    </div>
+  </ng-template>
+  
+  <ng-template #footer>
+    <p-button label="Close" icon="pi pi-times" (click)="closeQrDialog()" />
+  </ng-template>
+</p-dialog>
+
+<!-- Confirmation Dialog -->
 <p-confirmdialog [style]="{ width: '450px' }" />
