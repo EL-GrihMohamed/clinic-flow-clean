@@ -21,6 +21,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { CheckboxModule } from 'primeng/checkbox';
 import { PatientService, CreatePatientRequest } from '../../core/services/patient.service';
 import { Genre } from '../../core/models/gender.enum';
+import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 
 interface Column {
   field: string;
@@ -64,6 +65,11 @@ export class PatientsComponent implements OnInit {
   loading: boolean = false;
   qrCodeDialog: boolean = false;
   currentQrCodeUrl: string = '';
+  
+  // Search functionality
+  searchQuery: string = '';
+  searchSubject = new Subject<string>();
+  totalPatients: number = 0;
 
   // Dropdown options
   entryTypes = ENTRY_TYPES;
@@ -82,6 +88,7 @@ export class PatientsComponent implements OnInit {
     private messageService: MessageService
   ) {
     this.initializeCols();
+    this.setupSearchDebounce();
   }
 
   ngOnInit() {
@@ -100,11 +107,21 @@ export class PatientsComponent implements OnInit {
     ];
   }
 
+  setupSearchDebounce() {
+    this.searchSubject.pipe(
+      debounceTime(300),
+      distinctUntilChanged()
+    ).subscribe(searchTerm => {
+      this.performSearch(searchTerm);
+    });
+  }
+
   loadPatients() {
     this.loading = true;
-    this.patientService.getAll().subscribe({
-      next: (data) => {
-        this.patients.set(data);
+    this.patientService.searchPatients('').subscribe({
+      next: (response) => {
+        this.patients.set(response.items);
+        this.totalPatients = response.count;
         this.loading = false;
       },
       error: (error) => {
@@ -120,8 +137,43 @@ export class PatientsComponent implements OnInit {
     });
   }
 
+  // Updated global filter method to use search API
   onGlobalFilter(table: Table, event: Event) {
-    table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
+    const searchTerm = (event.target as HTMLInputElement).value;
+    this.searchQuery = searchTerm;
+    
+    // Use the search API instead of client-side filtering
+    this.searchSubject.next(searchTerm);
+    
+    // Clear the table's built-in filter since we're using server-side search
+    table.filterGlobal('', 'contains');
+  }
+
+  performSearch(searchTerm: string) {
+    this.loading = true;
+    this.patientService.searchPatients(searchTerm).subscribe({
+      next: (response) => {
+        this.patients.set(response.items);
+        this.totalPatients = response.count;
+        this.loading = false;
+      },
+      error: (error) => {
+        console.error('Error searching patients:', error);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Failed to search patients',
+          life: 3000
+        });
+        this.loading = false;
+      }
+    });
+  }
+
+  // Method to clear search and reload all patients
+  clearSearch() {
+    this.searchQuery = '';
+    this.loadPatients();
   }
 
   openNew() {
@@ -153,6 +205,7 @@ export class PatientsComponent implements OnInit {
           this.patientService.delete(guid).subscribe({
             next: () => {
               this.patients.set(this.patients().filter((val) => val.patientGuid !== patient.patientGuid && val.id !== patient.id));
+              this.totalPatients = Math.max(0, this.totalPatients - 1);
               this.messageService.add({
                 severity: 'success',
                 summary: 'Successful',
@@ -188,7 +241,9 @@ export class PatientsComponent implements OnInit {
           });
 
           Promise.all(deletePromises).then(() => {
+            const deletedCount = this.selectedPatients?.length || 0;
             this.patients.set(this.patients().filter((val) => !this.selectedPatients?.includes(val)));
+            this.totalPatients = Math.max(0, this.totalPatients - deletedCount);
             this.selectedPatients = null;
             this.messageService.add({
               severity: 'success',
@@ -298,6 +353,7 @@ export class PatientsComponent implements OnInit {
             qrcodeUrl: response.qrcodeUrl
           };
           this.patients.set([...this.patients(), newPatient]);
+          this.totalPatients++;
           this.messageService.add({
             severity: 'success',
             summary: 'Successful',
